@@ -6,7 +6,7 @@ const imageRoute = require('./routes/image-route');
 
 
 const app = express();
-
+app.use(express.json())
 // express setup
 const whitelist = ["http://localhost:3000"]
 
@@ -46,11 +46,8 @@ app.use('/api/Image', imageRoute.routes)
 
 
 
-  
 
-// get all pictures
 
-// delete a picture
 
 const PORT = 5000;
 app.listen(PORT, () => {

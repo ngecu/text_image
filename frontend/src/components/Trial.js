@@ -66,7 +66,7 @@ export default function Trial({ session }) {
     // Download Image - backend
     const download_image = (url)=>{
       console.log("sending signal to backend");
-      axios.post('http://localhost:5000/api/Image/download/', { url})
+      axios.post('http://127.0.0.1:5000/api/Image/download/', { url})
       .then(function (response) {
         if(response){
           

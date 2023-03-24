@@ -3,12 +3,13 @@ require("firebase/storage");
 var admin = require("firebase-admin");
 const uuid = require('uuid-v4');
 
-var serviceAccount = require("../imagetextconverter-95b1d-firebase-adminsdk-ah6qz-3d6733ecf7.json");
+var serviceAccount = require("../capstonefb-264e0-firebase-adminsdk-jshlt-ab2a9103bf.json");
 require('dotenv').config()
 const path = require('path')
 
 
-
+console.log("initialized app");
+console.log(process.env.STORAGE_BUCKET)
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   storageBucket: process.env.STORAGE_BUCKET
@@ -24,7 +25,7 @@ const downloadImage = async (req, res) => {
     url
   } = req.body
 
-  console.log(req.body)
+  
 
   async function uploadFile() {
 
@@ -39,8 +40,9 @@ const downloadImage = async (req, res) => {
 
     // Uploads a local file to the bucket
     var filename = path.join(__dirname,'../','photo.png')
-    console.log("file name is ",filename)
-
+    console.log(filename)
+    
+console.log("about to upload");
     await bucket.upload(filename, {
         // Support for HTTP requests made with `Accept-Encoding: gzip`
         destination: `${new Date().toISOString()}.png`,
@@ -56,7 +58,7 @@ const downloadImage = async (req, res) => {
 
 
         firebase_url.then((val) => {
-
+          
           return res.json(val)
         })
 
