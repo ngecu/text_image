@@ -2,10 +2,10 @@
 
 # dependencies
 frontend/node_modules
-frontend/.env.local
+
 
 server/node_modules
-server/.env
+
 
 
 /.pnp
@@ -32,7 +32,7 @@ yarn-error.log*
 .pnpm-debug.log*
 
 # local env files
-.env*.local
+# .env*.local
 
 # vercel
 .vercel
