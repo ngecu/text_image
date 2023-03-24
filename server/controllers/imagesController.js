@@ -60,7 +60,9 @@ const downloadImage = async (req, res) => {
           return res.json(val)
         })
 
-      });
+      })
+
+      .catch(err => console.log("error is ",err))
 
   }
 
