@@ -13,8 +13,8 @@ import Messages from './Messages';
 import axios from 'axios';
 
 import path from 'path';
-
-
+import { Accordion } from 'react-bootstrap-accordion'
+import Account from '../components/Account'
 
 import { Card, Container, Nav, Form, Row, Col, Button } from 'react-bootstrap';
 import { supabase } from '../supabaseClient';
@@ -38,7 +38,7 @@ export default function Trial({ session }) {
 
   useEffect(() => {
     getTexts();
-  }, [])
+  }, [texts])
 
 
  
@@ -90,6 +90,7 @@ export default function Trial({ session }) {
       .then(data=>{
         setLoading(true);
         download_image(data)
+        setLoading(false)
         // setLoading(false);
         
       })
@@ -140,12 +141,13 @@ export default function Trial({ session }) {
         .insert({
           name:prompt,
           link,
-          user_id:session.user.id
+          user_id:session.user.id,
+          timestamp:new Date().valueOf()
         })
         .single()
         
       if (error) throw error;
-      window.location.reload();
+    
     } catch (error) {
       alert(error.message);
     }
@@ -161,58 +163,96 @@ export default function Trial({ session }) {
   return (
 <div className="app-main">
 
-      {loading ? (
-        <>
-          <h2>Generating..Please Wait..</h2>
-          <div class="lds-ripple">
-            <div></div>
-            <div></div>
-          </div>
-        </>
-      ) : (
-        <>
-          <h2>Generate an Image using Open AI API</h2>
+<div class="row clearfix">
+    <div class="col-lg-12 xy" style={{width:"90%",margin:"0 10%"}}>
+        <div class="card chat-app">
+        
+            <div class="chat">
+         
 
-          <textarea
-            className="app-input"
-            placeholder={placeholder}
-            onChange={(e) => setPrompt(e.target.value)}
-            rows="10"
-            cols="40"
-          />
 
-          <Row>
-          {texts.map((t) => (
-            <Row>
-              <Col style={{disply:'flex', justifyContent:'left'}}>
-              {t.name}
-              </Col>
-              <Col md={6} sm={12} xl={6}>
+        
+            <div class="chat-header clearfix">
+                    <div class="row">
+                        <div class="col-6">
+                            
+                            <div class="chat-about">
+                            <Accordion title={session.user.email} children={<Account session={session} />} />
+                            </div>
+                        </div>
+                        <div class="col-6 hidden-sm text-right">
+                            <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
+                            <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chat-history">
               
-              </Col>
-              <Card style={{disply:'flex', justifyContent:'right' }}>
-              <Col>
-              <img style={{width:"100%"}} src={t.link}/>       
-             </Col>
-             </Card>
-              </Row>
+        <ul class="m-b-0">
+
+                    {texts.map((t) => (
+                      <>
+                      <li class="clearfix">
+            <div class="message-data text-right">
+               
+               
+            </div>
+            <div class="message other-message float-right"> {t.name} <span> <small> <sub></sub></small> </span> </div>
+        </li>
+
+                      <li class="clearfix">
+                            <div class="message-data">
+                              
+                            </div>
+                            <div class="message my-message"><img width={230} height={150} style={{"borderRadius":"5%"}} src={t.link} /></div>                                    
+                        </li> 
+
+                      </>
+            
+        
           ))}
-          </Row>
+            
+                    </ul>
 
-
-
-
-
-{/* <input type="file" onChange={handleChange} accept="/image/*" /> */}
-
-          <button onClick={generateImage}>Generate an Image</button>
-          {result.length > 0 ? (
-            <img className="result-image" src={result} alt="result" />
-          ) : (
-            <></>
-          )}
+                    {loading ? (
+      <li class="clearfix">
+      <div class="message-data text-right">
+         
+         
+      </div>
+      <div class="message other-message float-right"><div class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+      <span> <small> <sub></sub></small> </span> </div>
+  </li>
+      ) :(
+        <>
         </>
       )}
+
+                    
+                </div>
+                <div class="chat-message clearfix">
+                    <div class="input-group mb-0">
+                        <div class="input-group-prepend">
+                       
+                        </div>
+                        <input type="text" 
+                        class="form-control" 
+                        placeholder={placeholder}
+                        onChange={(e) => setPrompt(e.target.value)}
+                        />  
+                        <button onClick={generateImage}>Send</button>                                  
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    
     </div>
   )
 }
