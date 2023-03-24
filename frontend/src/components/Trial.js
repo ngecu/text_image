@@ -129,7 +129,7 @@ export default function Trial({ session }) {
           name:prompt,
           link,
           user_id:session.user.id,
-          timestamp:new Date().valueOf()
+          
         })
         .single()
         
