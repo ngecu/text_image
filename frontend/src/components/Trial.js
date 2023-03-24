@@ -3,12 +3,10 @@ import { Configuration,OpenAIApi
  } from 'openai'
  import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
  
-import {app,database} from '../services/firebase';
 import { collection,addDoc } from "firebase/firestore";
 import { getStorage, ref,uploadBytes,uploadBytesResumable,getDownloadURL } from "firebase/storage";
 import photo from './photo.png'
 import { saveAs } from 'file-saver'
-import { storage } from '../services/firebase';
 import Messages from './Messages';
 import axios from 'axios';
 
@@ -21,8 +19,6 @@ import { supabase } from '../supabaseClient';
 import { async } from '@firebase/util';
 
 export default function Trial({ session }) {
-
-  console.log(session.user.id);
   const [name, setName] = useState('');
   const [ text, setText ] = useState("");
   const [ link, setLink ] = useState("");
@@ -48,8 +44,10 @@ export default function Trial({ session }) {
     const generate_image_url = async() =>{
 
         // open ai setup 
+
+
     const configuration = new Configuration({
-      apiKey: "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",
+      apiKey: process.env.NEXT_PUBLIC_OPEN_AI_KEY,
     });
 
   const openai = new OpenAIApi(configuration);
@@ -101,17 +99,6 @@ export default function Trial({ session }) {
     };
 
 
-      // firebase configuration 
-    //   const dbInstance = collection(database, session.user.email);
-      
-    //   const saveText = (promptText,userEmail,image_url) => {
-    //     addDoc(dbInstance, {
-    //         prompt: promptText,
-    //         time: new Date().toISOString(),
-    //         user_email:userEmail,
-    //         image:image_url
-    //     })
-    // }
 
 
     // load data from supabase
@@ -126,7 +113,7 @@ export default function Trial({ session }) {
       if (error) throw error;
       if (data != null) {
         
-        setTexts(data); // [product1,product2,product3]
+        setTexts(data); //
       }
     } catch (error) {
       alert(error.message);
