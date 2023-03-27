@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSupabaseClient } from '@supabase/auth-helpers-react'
+import Image from 'next/image'
 
 export default function Avatar({ uid, url, size, onUpload }) {
   const supabase = useSupabaseClient()
@@ -8,7 +9,7 @@ export default function Avatar({ uid, url, size, onUpload }) {
 
   useEffect(() => {
     if (url) downloadImage(url)
-  }, [url])
+  }, [url,downloadImage])
 
   async function downloadImage(path) {
     try {
@@ -56,7 +57,7 @@ export default function Avatar({ uid, url, size, onUpload }) {
   return (
     <div>
       {avatarUrl ? (
-        <img
+        <Image
           src={avatarUrl}
           alt="Avatar"
           className="avatar image"

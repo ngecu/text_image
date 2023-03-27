@@ -1,13 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Configuration,OpenAIApi
  } from 'openai'
- import { useSession, useSupabaseClient } from '@supabase/auth-helpers-react'
- 
-import { collection,addDoc } from "firebase/firestore";
-import { getStorage, ref,uploadBytes,uploadBytesResumable,getDownloadURL } from "firebase/storage";
-import photo from './photo.png'
-import { saveAs } from 'file-saver'
-import Messages from './Messages';
+ import download from "image-downloader";
 import axios from 'axios';
 
 import path from 'path';
@@ -17,6 +11,7 @@ import Account from '../components/Account'
 import { Card, Container, Nav, Form, Row, Col, Button } from 'react-bootstrap';
 import { supabase } from '../supabaseClient';
 import { async } from '@firebase/util';
+import Image from 'next/image';
 
 export default function Trial({ session }) {
   const [name, setName] = useState('');
@@ -34,7 +29,7 @@ export default function Trial({ session }) {
 
   useEffect(() => {
     getTexts();
-  }, [texts])
+  }, [])
 
 
  
@@ -66,16 +61,21 @@ export default function Trial({ session }) {
     // Download Image - backend
     const download_image = (url)=>{
       console.log("sending signal to backend");
-      axios.post('http://127.0.0.1:5000/api/Image/download/', { url})
-      .then(function (response) {
-        if(response){
+      fetch(url)
+  .then(response => response.json())
+  .then(data => console.log(data));
+      // download.image({url,dest:'./photo.png'})
+      console.log("downloaded");
+      // axios.post('api/Image/download/', { url})
+      // .then(function (response) {
+      //   if(response){
           
-          createText(response.data)
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      //     createText(response.data)
+      //   }
+      // })
+      // .catch(function (error) {
+      //   console.log(error);
+      // });
     }
 
 
@@ -164,7 +164,10 @@ export default function Trial({ session }) {
                         <div class="col-6">
                             
                             <div class="chat-about">
-                            <Accordion title={session.user.email} children={<Account session={session} />} />
+                            <Accordion title={session.user.email} >
+                            <Account session={session} />
+                              </Accordion> 
+                            
                             </div>
                         </div>
                         <div class="col-6 hidden-sm text-right">
@@ -194,7 +197,7 @@ export default function Trial({ session }) {
                             <div class="message-data">
                               
                             </div>
-                            <div class="message my-message"><img width={230} height={150} style={{"borderRadius":"5%"}} src={t.link} /></div>                                    
+                            <div class="message my-message"><Image alt="message" width={230} height={150} style={{"borderRadius":"5%"}} src={t.link} /></div>                                    
                         </li> 
 
                       </>

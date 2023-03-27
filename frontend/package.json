@@ -1,11 +1,11 @@
 {
   "name": "supabase-nextjs",
-  "proxy": "http://127.0.0.1:5000",
+  "proxy": "http://127.0.0.1:5000/",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "NODE_ENV='development' node server.js",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
@@ -22,7 +22,6 @@
     "dotenv": "^16.0.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
-    "express": "^4.18.2",
     "file-saver": "^2.0.5",
     "firebase": "^9.18.0",
     "firebase-admin": "^11.5.0",
@@ -35,5 +34,14 @@
     "react-bootstrap-accordion": "^1.0.0",
     "react-dom": "18.2.0",
     "react-scroll-to-bottom": "^4.2.0"
+  },
+  "devDependencies": {
+    "express": "^4.18.2",
+    "http-proxy-middleware": "^2.0.6"
+  },
+  "browser": {
+    "fs": false,
+    "os": false,
+    "path": false
   }
 }
