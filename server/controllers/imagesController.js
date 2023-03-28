@@ -3,7 +3,7 @@ require("firebase/storage");
 var admin = require("firebase-admin");
 const uuid = require('uuid-v4');
 
-var serviceAccount = require("../capstonefb-264e0-firebase-adminsdk-jshlt-ab2a9103bf.json");
+var serviceAccount = require("../");
 require('dotenv').config()
 const path = require('path')
 

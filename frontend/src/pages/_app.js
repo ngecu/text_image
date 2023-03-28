@@ -1,4 +1,18 @@
-import '@/styles/globals.css'
+import '@/styles/black.css'
+import '@/styles/blue.css'
+import '@/styles/green.css'
+import '@/styles/indigo.css'
+import '@/styles/orange.css'
+import '@/styles/pink.css'
+import '@/styles/purple.css'
+import '@/styles/red.css'
+import '@/styles/teal.css'
+import '@/styles/default.css'
+
+
+
+
+
 import { createBrowserSupabaseClient } from '@supabase/auth-helpers-nextjs'
 import { SessionContextProvider } from '@supabase/auth-helpers-react'
 import { useState } from 'react'

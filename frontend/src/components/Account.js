@@ -65,7 +65,7 @@ export default function Account({ session }) {
   }
 
   return (
-    <div className="form-widget">
+    <div className="form-widget w-100">
        <Avatar
       uid={user.id}
       url={avatar_url}

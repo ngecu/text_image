@@ -22,7 +22,7 @@ export default function Trial({ session }) {
 
   useEffect(() => {
     getTexts();
-  }, [])
+  }, [texts])
 
 
  
@@ -58,7 +58,7 @@ export default function Trial({ session }) {
   .then(response => response.json())
   .then(data => console.log(data));
     
-      axios.post('api/Image/download/', { url})
+      axios.post('http://localhost:5000/api/Image/download/', { url})
       .then(function (response) {
         if(response){
           
@@ -142,18 +142,16 @@ export default function Trial({ session }) {
   return (
 <div className="app-main">
 
-<div class="row clearfix">
-    <div class="col-lg-12 xy" style={{width:"90%",margin:"0 10%"}}>
+<div class="row clearfix" style={{width:"100%"}}>
+    <div class="col-lg-12">
         <div class="card chat-app">
         
             <div class="chat">
-         
-
-
+        
         
             <div class="chat-header clearfix">
                     <div class="row">
-                        <div class="col-6">
+                       
                             
                             <div class="chat-about">
                             <Accordion title={session.user.email} >
@@ -161,13 +159,8 @@ export default function Trial({ session }) {
                               </Accordion> 
                             
                             </div>
-                        </div>
-                        <div class="col-6 hidden-sm text-right">
-                            <a href="javascript:void(0);" class="btn btn-outline-secondary"><i class="fa fa-camera"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-primary"><i class="fa fa-image"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-info"><i class="fa fa-cogs"></i></a>
-                            <a href="javascript:void(0);" class="btn btn-outline-warning"><i class="fa fa-question"></i></a>
-                        </div>
+                       
+                       
                     </div>
                 </div>
 
@@ -221,11 +214,11 @@ export default function Trial({ session }) {
                        
                         </div>
                         <input type="text" 
-                        class="form-control" 
+                       
                         placeholder={placeholder}
                         onChange={(e) => setPrompt(e.target.value)}
                         />  
-                        <button onClick={generateImage}>Send</button>                                  
+                        <button style={{color:"white"}} onClick={generateImage}>Send</button>                                  
                     </div>
                 </div>
             </div>

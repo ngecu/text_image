@@ -7,6 +7,7 @@ frontend/.env
 server/node_modules
 server/.env
 
+server/capstonefb-264e0-firebase-adminsdk-jshlt-8c584dfb8b.json
 
 /.pnp
 .pnp.js
