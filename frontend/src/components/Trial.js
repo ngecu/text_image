@@ -1,22 +1,15 @@
 import { useState, useEffect } from 'react'
 import { Configuration,OpenAIApi
  } from 'openai'
- import download from "image-downloader";
+ 
 import axios from 'axios';
-
-import path from 'path';
 import { Accordion } from 'react-bootstrap-accordion'
 import Account from '../components/Account'
 
-import { Card, Container, Nav, Form, Row, Col, Button } from 'react-bootstrap';
 import { supabase } from '../supabaseClient';
-import { async } from '@firebase/util';
 import Image from 'next/image';
 
 export default function Trial({ session }) {
-  const [name, setName] = useState('');
-  const [ text, setText ] = useState("");
-  const [ link, setLink ] = useState("");
   const [ texts, setTexts] = useState([]);
 
   const [prompt, setPrompt] = useState("");
@@ -64,18 +57,17 @@ export default function Trial({ session }) {
       fetch(url)
   .then(response => response.json())
   .then(data => console.log(data));
-      // download.image({url,dest:'./photo.png'})
-      console.log("downloaded");
-      // axios.post('api/Image/download/', { url})
-      // .then(function (response) {
-      //   if(response){
+    
+      axios.post('api/Image/download/', { url})
+      .then(function (response) {
+        if(response){
           
-      //     createText(response.data)
-      //   }
-      // })
-      // .catch(function (error) {
-      //   console.log(error);
-      // });
+          createText(response.data)
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
 
 

@@ -14,29 +14,19 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(express.json())
 // express setup
-const whitelist = ["http://127.0.0.1:3000"]
+const whitelist = ["http://127.0.0.1:3000","/home/devngecu/Desktop/code/text_image/frontend/out/index.html"]
 
-const corsOptions = {
-
+var corsOptions = {
   origin: function (origin, callback) {
-
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-
+    if (whitelist.indexOf(origin) !== -1) {
       callback(null, true)
-
     } else {
-
-      callback(new Error("Not allowed by CORS"))
-
+      callback(new Error('Not allowed by CORS'))
     }
-
-  },
-
-  credentials: true,
-
+  }
 }
 
-app.use(cors())
+app.use(cors(corsOptions))
 
 
 app.use(express.json());
